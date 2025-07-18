@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="estiloindex.css" />
+  <title>Soufa.IA - Chatbot</title>
+
+  <!-- Fonte delicada -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="estilo.css">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <div class="container-chatbot">
+    <div id="janela-chat" class="janela-chat hidden">
+      <div class="header-chat">
+        <h3>Fale com a Soufa.IA</h3>
+        <select id="seletor-ia" class="seletor-ia">
+          <option value="openai">OpenAI</option>
+          <option value="gemini">Gemini</option>
+          <option value="claude">Claude</option>
+        </select>
+      </div>
+
+      <div id="corpo-chat" class="corpo-chat">
+        <div class="mensagem-bot">
+          Olá! Sou a Soufa.IA, assistente virtual da Devweb. Como posso te ajudar hoje?
+        </div>
+      </div>
+
+      <div class="rodape-chat">
+        <input type="text" id="input-chat" placeholder="Digite sua pergunta..." />
+        <button id="btn-enviar-chat"><i class="fas fa-paper-plane"></i></button>
+      </div>
+    </div>
+
+    <!-- Ícone de robô neon na bolinha -->
+    <button id="btn-abrir-chat" class="btn-abrir-chat">
+      <img src="img/robo-neon.png" alt="Robô Neon" />
+    </button>
+  </div>
+
+  <script>
+    const btnAbrirChat = document.getElementById('btn-abrir-chat');
+    const janelaChat = document.getElementById('janela-chat');
+    const corpoChat = document.getElementById('corpo-chat');
+    const inputChat = document.getElementById('input-chat');
+    const btnEnviarChat = document.getElementById('btn-enviar-chat');
+    const seletorIA = document.getElementById('seletor-ia');
+
+    let historicoChat = [];
+
+    const CHAVES_API = {
+      gemini: 'SUA_CHAVE_GEMINI',
+      openai: 'SUA_CHAVE_OPENAI',
+      claude: '',
+    };
+
+    btnAbrirChat.addEventListener('click', () => {
+      janelaChat.classList.remove('hidden');
+      btnAbrirChat.classList.add('hidden');
+    });
+
+    function adicionarMensagemNaTela(texto, classe) {
+      const divMensagem = document.createElement('div');
+      divMensagem.className = classe;
+      divMensagem.innerHTML = `<span>${texto}</span>`;
+      corpoChat.appendChild(divMensagem);
+      corpoChat.scrollTop = corpoChat.scrollHeight;
+      return divMensagem;
+    }
+
+    async function enviarMensagem() {
+      const mensagemUsuario = inputChat.value.trim();
+      if (!mensagemUsuario) return;
+
+      adicionarMensagemNaTela(mensagemUsuario, 'mensagem-usuario');
+      inputChat.value = '';
+      historicoChat.push({ role: 'user', parts: [{ text: mensagemUsuario }] });
+
+      const divDigitando = adicionarMensagemNaTela('Soufa.IA está digitando...', 'mensagem-bot-digitando');
+
+      const iaSelecionada = seletorIA.value || 'openai';
+
+      try {
+        const respostaIA = await obterRespostaDaIA(iaSelecionada);
+        divDigitando.remove();
+        adicionarMensagemNaTela(respostaIA, 'mensagem-bot');
+        historicoChat.push({ role: 'model', parts: [{ text: respostaIA }] });
+      } catch (error) {
+        divDigitando.remove();
+        adicionarMensagemNaTela('Erro ao obter resposta da IA.', 'mensagem-bot');
+        console.error(error);
+      }
+    }
+
+    async function obterRespostaDaIA(provedor) {
+      const ultimaMensagem = historicoChat[historicoChat.length - 1].parts[0].text;
+      switch (provedor) {
+        case 'gemini': return "Resposta simulada Gemini: " + ultimaMensagem;
+        case 'openai': return "Resposta simulada OpenAI: " + ultimaMensagem;
+        case 'claude': return "Resposta simulada Claude: " + ultimaMensagem;
+        default: throw new Error('Provedor IA não suportado');
+      }
+    }
+
+    btnEnviarChat.addEventListener('click', enviarMensagem);
+    inputChat.addEventListener('keypress', e => {
+      if (e.key === 'Enter') enviarMensagem();
+    });
+  </script>
+</body>
+</html>

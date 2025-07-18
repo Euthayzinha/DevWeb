@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Devweb - Seu Guia De Estudos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="estiloindex.css">
+    <link rel="stylesheet" href="estilo.css">
+</head>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #0f0a1a;
+            color: #e2e2e2;
+            overflow-x: hidden;
+        }
+        
+        .title-font {
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .neon-purple {
+            color: #c724f1;
+            text-shadow: 0 0 5px #c724f1, 0 0 10px #c724f1, 0 0 15px #c724f1;
+        }
+        
+        .neon-border {
+            border: 1px solid #c724f1;
+            box-shadow: 0 0 5px #c724f1, 0 0 10px rgba(199, 36, 241, 0.5);
+        }
+        
+        .neon-bg {
+            background: rgba(20, 10, 30, 0.8);
+            box-shadow: 0 0 20px rgba(199, 36, 241, 0.3);
+        }
+        
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(45deg, #0f0a1a, #1a0d2e, #0f0a1a);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+        
+        .circuit-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.05;
+            background-image: 
+                radial-gradient(circle at 10% 20%, #c724f1 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, #c724f1 0%, transparent 20%),
+                radial-gradient(circle at 50% 50%, #c724f1 0%, transparent 30%);
+            background-size: 300px 300px;
+            animation: float 20s linear infinite;
+        }
+        
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        @keyframes float {
+            0% { transform: translate(0, 0); }
+            25% { transform: translate(-5%, -5%); }
+            50% { transform: translate(-10%, 0); }
+            75% { transform: translate(-5%, 5%); }
+            100% { transform: translate(0, 0); }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(199, 36, 241, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(199, 36, 241, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(199, 36, 241, 0); }
+        }
+        
+        .glow-on-hover:hover {
+            text-shadow: 0 0 10px #c724f1, 0 0 20px #c724f1;
+        }
+        
+        .tech-card {
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+        }
+        
+        .tech-card:hover {
+            transform: translateY(-5px) rotateX(5deg);
+            box-shadow: 0 15px 30px rgba(199, 36, 241, 0.4);
+        }
+        
+        .chat-bubble {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: #c724f1;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 0 15px rgba(199, 36, 241, 0.8);
+            animation: pulse 2s infinite;
+        }
+        
+        .chat-window {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 300px;
+            height: 400px;
+            background: rgba(20, 10, 30, 0.95);
+            border-radius: 10px;
+            border: 1px solid #c724f1;
+            box-shadow: 0 0 20px rgba(199, 36, 241, 0.5);
+            z-index: 1000;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .chat-header {
+            background: rgba(199, 36, 241, 0.2);
+            padding: 10px;
+            border-bottom: 1px solid #c724f1;
+        }
+        
+        .chat-messages {
+            flex: 1;
+            padding: 10px;
+            overflow-y: auto;
+        }
+        
+        .chat-input {
+            padding: 10px;
+            border-top: 1px solid #c724f1;
+            background: rgba(20, 10, 30, 0.8);
+        }
+        
+        .message {
+            margin-bottom: 10px;
+            padding: 8px 12px;
+            border-radius: 15px;
+            max-width: 80%;
+        }
+        
+        .user-message {
+            background: rgba(199, 36, 241, 0.3);
+            margin-left: auto;
+            border-bottom-right-radius: 5px;
+        }
+        
+        .bot-message {
+            background: rgba(255, 255, 255, 0.1);
+            margin-right: auto;
+            border-bottom-left-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-bg"></div>
+    <div class="circuit-pattern"></div>
+    
+    <!-- Navbar -->
+    <nav class="border-b border-purple-900/10 bg-black/20 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <i class="fas fa-code text-2xl neon-purple mr-2"></i>
+                        <span class="title-font text-xl font-bold neon-purple">Devweb</span>
+                    </div>
+                </div>
+                <div class="hidden md:ml-6 md:flex md:items-center md:space-x-8">
+                    <a href="#" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium glow-on-hover">Início</a>
+                    <a href="#cursos" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium glow-on-hover">Cursos</a>
+                    <a href="#recursos" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium glow-on-hover">Recursos</a>
+                    <a href="#sobre" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium glow-on-hover">Sobre</a>
+                    <a href="#contato" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium glow-on-hover">Contato</a>
+                    <a href="quiz.html" class="hover:text-gray-200 transition">Guia de Estudos</a>
+                </div>
+                <div class="-mr-2 flex items-center md:hidden">
+                    <button type="button" id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-purple-500">
+                        <span class="sr-only">Abrir menu</span>
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div class="md:hidden hidden" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium glow-on-hover">Início</a>
+                <a href="#cursos" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium glow-on-hover">Cursos</a>
+                <a href="#recursos" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium glow-on-hover">Recursos</a>
+                <a href="#sobre" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium glow-on-hover">Sobre</a>
+                <a href="#contato" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium glow-on-hover">Contato</a>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <div class="relative overflow-hidden">
+        <div class="max-w-7xl mx-auto">
+            <div class="relative z-10 pb-8 sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32">
+                <main class="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 lg:mt-16 lg:px-8 xl:mt-20">
+                    <div class="sm:text-center lg:text-left">
+                        <h1 class="title-font text-4xl tracking-tight font-extrabold sm:text-5xl md:text-6xl">
+                            <span class="block neon-purple">Devweb</span>
+                            <span class="block text-white mt-2">Seu Guia de Estudos</span>
+                        </h1>
+                        <p class="mt-3 text-base text-gray-300 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
+                            A plataforma definitiva para dominar desenvolvimento web com cursos, tutoriais e recursos atualizados.
+                        </p>
+                        <div class="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
+                            <div class="rounded-md shadow">
+                                <a href="#cursos" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-purple-900 hover:bg-purple-800 md:py-4 md:text-lg md:px-10 neon-border">
+                                    Comece Agora
+                                </a>
+                            </div>
+                            <div class="mt-3 sm:mt-0 sm:ml-3">
+                                <a href="#sobre" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-purple-300 bg-black/30 hover:bg-black/50 md:py-4 md:text-lg md:px-10 neon-border">
+                                    Saiba Mais
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+        <div class="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2 hidden lg:block">
+            <img class="h-56 w-full object-cover sm:h-72 md:h-96 lg:w-full lg:h-full opacity-80" src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2850&q=80" alt="">
+        </div>
+    </div>
+    
+    <!-- Cursos Section -->
+    <div id="cursos" class="py-12 neon-bg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="lg:text-center">
+                <h2 class="title-font text-3xl font-extrabold tracking-tight sm:text-4xl neon-purple">
+                    Nossos Cursos
+                </h2>
+                <p class="mt-4 max-w-2xl text-xl text-gray-300 lg:mx-auto">
+                    Aprenda as tecnologias mais demandadas do mercado
+                </p>
+            </div>
+            
+            <div class="mt-10">
+                <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+                    <!-- Curso 1 -->
+                    <div class="tech-card neon-bg rounded-lg overflow-hidden p-6 neon-border">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0 bg-purple-900/30 rounded-md p-3 neon-border">
+                                <i class="fab fa-html5 text-2xl neon-purple"></i>
+                            </div>
+                            <div class="ml-5">
+                                <h3 class="text-lg leading-6 font-medium text-white">HTML5 & CSS3</h3>
+                                <p class="mt-1 text-sm text-purple-200">Fundamentos Web</p>
+                            </div>
+                        </div>
+                        <p class="mt-5 text-base text-gray-300">
+                            Domine a estrutura e estilo de páginas web com os pilares do desenvolvimento front-end.
+                        </p>
+                        <div class="mt-6">
+                            <a href="#" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-purple-900/50 hover:bg-purple-800/50 neon-border">
+                                Ver Curso <i class="fas fa-arrow-right ml-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Curso 2 -->
+                    <div class="tech-card neon-bg rounded-lg overflow-hidden p-6 neon-border">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0 bg-purple-900/30 rounded-md p-3 neon-border">
+                                <i class="fab fa-js text-2xl neon-purple"></i>
+                            </div>
+                            <div class="ml-5">
+                                <h3 class="text-lg leading-6 font-medium text-white">JavaScript Moderno</h3>
+                                <p class="mt-1 text-sm text-purple-200">Interatividade Web</p>
+                            </div>
+                        </div>
+                        <p class="mt-5 text-base text-gray-300">
+                            Aprenda JavaScript do básico ao avançado, incluindo ES6+, async/await e manipulação do DOM.
+                        </p>
+                        <div class="mt-6">
+                            <a href="#" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-purple-900/50 hover:bg-purple-800/50 neon-border">
+                                Ver Curso <i class="fas fa-arrow-right ml-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Curso 3 -->
+                    <div class="tech-card neon-bg rounded-lg overflow-hidden p-6 neon-border">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0 bg-purple-900/30 rounded-md p-3 neon-border">
+                                <i class="fab fa-react text-2xl neon-purple"></i>
+                            </div>
+                            <div class="ml-5">
+                                <h3 class="text-lg leading-6 font-medium text-white">React.js</h3>
+                                <p class="mt-1 text-sm text-purple-200">Front-end Avançado</p>
+                            </div>
+                        </div>
+                        <p class="mt-5 text-base text-gray-300">
+                            Construa interfaces modernas e reativas com a biblioteca JavaScript mais popular do mercado.
+                        </p>
+                        <div class="mt-6">
+                            <a href="#" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-purple-900/50 hover:bg-purple-800/50 neon-border">
+                                Ver Curso <i class="fas fa-arrow-right ml-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Recursos Section -->
+    <div id="recursos" class="py-12 bg-black/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="lg:text-center">
+                <h2 class="title-font text-3xl font-extrabold tracking-tight sm:text-4xl neon-purple">
+                    Recursos Exclusivos
+                </h2>
+                <p class="mt-4 max-w-2xl text-xl text-gray-300 lg:mx-auto">
+                    Ferramentas para acelerar seu aprendizado
+                </p>
+            </div>
+            
+            <div class="mt-10">
+                <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+                    <!-- Recurso 1 -->
+                    <div class="tech-card neon-bg rounded-lg overflow-hidden p-6 text-center neon-border">
+                        <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-md bg-purple-900/30 neon-border">
+                            <i class="fas fa-laptop-code text-xl neon-purple"></i>
+                        </div>
+                        <h3 class="mt-5 text-lg font-medium text-white">Ambiente Integrado</h3>
+                        <p class="mt-2 text-base text-gray-300">
+                            CodeSandbox integrado para praticar diretamente no navegador.
+                        </p>
+                    </div>
+                    
+                    <!-- Recurso 2 -->
+                    <div class="tech-card neon-bg rounded-lg overflow-hidden p-6 text-center neon-border">
+                        <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-md bg-purple-900/30 neon-border">
+                            <i class="fas fa-project-diagram text-xl neon-purple"></i>
+                        </div>
+                        <h3 class="mt-5 text-lg font-medium text-white">Projetos Práticos</h3>
+                        <p class="mt-2 text-base text-gray-300">
+                            Mais de 50 projetos reais para construir seu portfólio.
+                        </p>
+                    </div>
+                    
+                    <!-- Recurso 3 -->
+                    <div class="tech-card neon-bg rounded-lg overflow-hidden p-6 text-center neon-border">
+                        <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-md bg-purple-900/30 neon-border">
+                            <i class="fas fa-chalkboard-teacher text-xl neon-purple"></i>
+                        </div>
+                        <h3 class="mt-5 text-lg font-medium text-white">Mentoria</h3>
+                        <p class="mt-2 text-base text-gray-300">
+                            Suporte direto com especialistas para tirar dúvidas.
+                        </p>
+                    </div>
+                    
+                    <!-- Recurso 4 -->
+                    <div class="tech-card neon-bg rounded-lg overflow-hidden p-6 text-center neon-border">
+                        <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-md bg-purple-900/30 neon-border">
+                            <i class="fas fa-certificate text-xl neon-purple"></i>
+                        </div>
+                        <h3 class="mt-5 text-lg font-medium text-white">Certificação</h3>
+                        <p class="mt-2 text-base text-gray-300">
+                            Certificado reconhecido pelo mercado ao concluir cada curso.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Sobre Section -->
+    <div id="sobre" class="py-12 neon-bg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="lg:text-center">
+                <h2 class="title-font text-3xl font-extrabold tracking-tight sm:text-4xl neon-purple">
+                    Sobre Nós
+                </h2>
+            </div>
+            
+            <div class="mt-10 flex flex-col lg:flex-row items-center">
+                <div class="lg:w-1/2 lg:pr-12">
+                    <p class="text-lg text-gray-300 mb-6">
+                        O Devweb nasceu da paixão por compartilhar conhecimento e ajudar pessoas a ingressarem no mundo do desenvolvimento web.
+                    </p>
+                    <p class="text-lg text-gray-300 mb-6">
+                        Nossa missão é democratizar o acesso à educação tecnológica de qualidade, com cursos atualizados e metodologias que realmente preparam você para o mercado.
+                    </p>
+                    <p class="text-lg text-gray-300">
+                        Com uma abordagem prática e focada em projetos reais, já ajudamos centenas de estudantes a darem seus primeiros passos na carreira de desenvolvimento.
+                    </p>
+                </div>
+                <div class="lg:w-1/2 mt-10 lg:mt-0">
+                    <div class="relative rounded-lg overflow-hidden neon-border">
+                        <img class="w-full h-auto" src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80" alt="Equipe Devweb">
+                        <div class="absolute inset-0 bg-purple-900/20"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Contato Section -->
+    <div id="contato" class="py-12 bg-black/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="lg:text-center">
+                <h2 class="title-font text-3xl font-extrabold tracking-tight sm:text-4xl neon-purple">
+                    Contato
+                </h2>
+                <p class="mt-4 max-w-2xl text-xl text-gray-300 lg:mx-auto">
+                    Estamos aqui para ajudar em sua jornada de aprendizado
+                </p>
+            </div>
+            
+            <div class="mt-10 flex flex-col lg:flex-row">
+                <div class="lg:w-1/2 lg:pr-12">
+                    <div class="neon-bg rounded-lg p-6 neon-border">
+                        <h3 class="text-lg font-medium text-white mb-4">Suporte Direto</h3>
+                        <div class="flex items-start mb-4">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-user-circle text-xl neon-purple"></i>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-sm text-gray-300">Contato com a fundadora</p>
+                                <p class="text-base font-medium text-white">61 99677-8260</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-robot text-xl neon-purple"></i>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-sm text-gray-300">Assistente Virtual</p>
+                                <p class="text-base font-medium text-white"><soufa class="IA">Soufa.IA</soufa></p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="neon-bg rounded-lg p-6 mt-6 neon-border">
+                        <h3 class="text-lg font-medium text-white mb-4">Redes Sociais</h3>
+                        <div class="flex space-x-4">
+                            <a href="#" class="text-gray-300 hover:text-white">
+                                <i class="fab fa-instagram text-2xl glow-on-hover"></i>
+                            </a>
+                            <a href="#" class="text-gray-300 hover:text-white">
+                                <i class="fab fa-twitter text-2xl glow-on-hover"></i>
+                            </a>
+                            <a href="#" class="text-gray-300 hover:text-white">
+                                <i class="fab fa-linkedin text-2xl glow-on-hover"></i>
+                            </a>
+                            <a href="#" class="text-gray-300 hover:text-white">
+                                <i class="fab fa-youtube text-2xl glow-on-hover"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lg:w-1/2 mt-10 lg:mt-0">
+                    <div class="neon-bg rounded-lg p-6 neon-border">
+                        <h3 class="text-lg font-medium text-white mb-4">Envie uma Mensagem</h3>
+                        <form>
+                            <div class="mb-4">
+                                <label for="name" class="block text-sm font-medium text-gray-300 mb-1">Nome</label>
+                                <input type="text" id="name" class="w-full px-3 py-2 bg-black/30 border border-purple-900/50 rounded-md text-white focus:outline-none focus:ring-1 focus:ring-purple-500">
+                            </div>
+                            <div class="mb-4">
+                                <label for="email" class="block text-sm font-medium text-gray-300 mb-1">Email</label>
+                                <input type="email" id="email" class="w-full px-3 py-2 bg-black/30 border border-purple-900/50 rounded-md text-white focus:outline-none focus:ring-1 focus:ring-purple-500">
+                            </div>
+                            <div class="mb-4">
+                                <label for="message" class="block text-sm font-medium text-gray-300 mb-1">Mensagem</label>
+                                <textarea id="message" rows="4" class="w-full px-3 py-2 bg-black/30 border border-purple-900/50 rounded-md text-white focus:outline-none focus:ring-1 focus:ring-purple-500"></textarea>
+                            </div>
+                            <div class="mt-6">
+                                <button type="submit" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-purple-900 hover:bg-purple-800 md:py-4 md:text-lg md:px-10 neon-border">
+                                    Enviar Mensagem
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer class="bg-black/30 border-t border-purple-900/10">
+        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+            <div class="xl:grid xl:grid-cols-3 xl:gap-8">
+                <div class="space-y-8 xl:col-span-1">
+                    <div class="flex items-center">
+                        <i class="fas fa-code text-2xl neon-purple mr-2"></i>
+                        <span class="title-font text-xl font-bold neon-purple">Devweb</span>
+                    </div>
+                    <p class="text-gray-300 text-base">
+                        Seu guia completo para dominar desenvolvimento web e construir uma carreira de sucesso.
+                    </p>
+                    <div class="flex space-x-6">
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-instagram text-xl glow-on-hover"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-twitter text-xl glow-on-hover"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-linkedin text-xl glow-on-hover"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-youtube text-xl glow-on-hover"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="mt-12 grid grid-cols-2 gap-8 xl:mt-0 xl:col-span-2">
+                    <div class="md:grid md:grid-cols-2 md:gap-8">
+                        <div>
+                            <h3 class="text-sm font-semibold text-white tracking-wider uppercase">
+                                Cursos
+                            </h3>
+                            <ul class="mt-4 space-y-4">
+                                <li>
+                                    <a href="#" class="text-base text-gray-300 hover:text-white glow-on-hover">
+                                        Front-end
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="text-base text-gray-300 hover:text-white glow-on-hover">
+                                        Back-end
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="text-base text-gray-300 hover:text-white glow-on-hover">
+                                        Full Stack
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="text-base text-gray-300 hover:text-white glow-on-hover">
+                                        UI/UX
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="mt-12 md:mt-0">
+                            <h3 class="text-sm font-semibold text-white tracking-wider uppercase">
+                                Recursos
+                            </h3>
+                            <ul class="mt-4 space-y-4">
+                                <li>
+                                    <a href="#" class="text-base text-gray-300 hover:text-white glow-on-hover">
+                                        Blog
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="text-base text-gray-300 hover:text-white glow-on-hover">
+                                        Tutoriais
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="text-base text-gray-300 hover:text-white glow-on-hover">
+                                        Comunidade
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="text-base text-gray-300 hover:text-white glow-on-hover">
+                                        Vagas
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="md:grid md:grid-cols-2 md:gap-8">
+                        <div>
+                            <h3 class="text-sm font-semibold text-white tracking-wider uppercase">
+                                Empresa
+                            </h3>
+                            <ul class="mt-4 space-y-4">
+                                <li>
+                                    <a href="#" class="text-base text-gray-300 hover:text-white glow-on-hover">
+                                        Sobre
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="text-base text-gray-300 hover:text-white glow-on-hover">
+                                        Equipe
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="text-base text-gray-300 hover:text-white glow-on-hover">
+                                        Parceiros
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="text-base text-gray-300 hover:text-white glow-on-hover">
+                                        Privacidade
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="mt-12 md:mt-0">
+                            <h3 class="text-sm font-semibold text-white tracking-wider uppercase">
+                                Suporte
+                            </h3>
+                            <ul class="mt-4 space-y-4">
+                                <li>
+                                    <a href="#" class="text-base text-gray-300 hover:text-white glow-on-hover">
+                                        Central de Ajuda
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="text-base text-gray-300 hover:text-white glow-on-hover">
+                                        Termos
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="text-base text-gray-300 hover:text-white glow-on-hover">
+                                        FAQ
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="text-base text-gray-300 hover:text-white glow-on-hover">
+                                        Contato
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-12 border-t border-purple-900/10 pt-8">
+                <p class="text-base text-gray-400 text-center">
+                    &copy; 2023 Devweb - Seu Guia de Estudos. Todos os direitos reservados.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Chatbot -->
+<div class="container-chatbot">
+  <div id="janela-chat" class="janela-chat hidden">
+    <div class="header-chat">
+      <h3 style="margin: 0;">Fale com a SofIA</h3>
+      <button id="btn-fechar-chat" class="btn-fechar-chat">❉</button>
+      <select id="seletor-ia" class="seletor-ia">
+        <option value="openai">Sopen.IA</option>
+        <option value="gemini">Somini.AI</option>
+        <option value="claude">Socld.AI</option>
+      </select> <!-- Fim do seletor de IA -->
+    </div>
+
+    <div id="corpo-chat" class="corpo-chat">
+      <div class="mensagem-bot">
+        Olá! Sou a SofIA, assistente virtual da Devweb tenho três opções de IA para tirar suas dúvidas da melhor forma possivel. Como posso te ajudar hoje?
+        </div>
+      </div>
+
+      <div class="rodape-chat">
+        <input type="text" id="input-chat" placeholder="Digite sua pergunta..." />
+        <button id="btn-enviar-chat"><i class="fas fa-paper-plane"></i></button>
+      </div>
+    </div>
+
+    <!-- Ícone de robô neon na bolinha -->
+    <button id="btn-abrir-chat" class="btn-abrir-chat">
+      <img src="robo-neon.jpg" alt="SOF.IA" />
+    </button>
+  </div>
+
+  <!-- Lógica do Menu Mobile -->
+<script>
+    const btnMobileMenu = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuItens = document.getElementById('menu-mobile-itens');
+
+    btnMobileMenu.addEventListener('click', () => {
+    menuItens.classList.toggle('hidden');
+}); // Fim da lógica do Menu Mobile
+
+// Lógica do Chatbot
+const btnAbrirChat = document.getElementById('btn-abrir-chat');
+    const btnFecharChat = document.getElementById('btn-fechar-chat');
+    const janelaChat = document.getElementById('janela-chat');
+    const corpoChat = document.getElementById('corpo-chat');
+    const inputChat = document.getElementById('input-chat');
+    const btnEnviarChat = document.getElementById('btn-enviar-chat');
+    const seletorIA = document.getElementById('seletor-ia');
+
+    // ATUALIZADO: Array para guardar o histórico da conversa
+    let historicoChat = [];
+
+const CHAVES_API = {
+  gemini: 'AIzaSyAe3iB2o3ib-rnWUa_lrNq3N1YaTLTljNU',
+  openai: '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',
+  claude: '.',
+}; // Fim das chaves de API
+
+    btnAbrirChat.addEventListener('click', () => {
+    janelaChat.classList.remove('hidden');
+    btnAbrirChat.classList.add('hidden');
+
+    btnFecharChat.addEventListener('click', () => {
+      janelaChat.classList.add('hidden');
+      btnAbrirChat.classList.remove('hidden');
+    });
+  });
+
+  function adicionarMensagemNaTela(texto, classe) {
+      const divMensagem = document.createElement('div');
+      divMensagem.className = classe;
+      divMensagem.innerHTML = `<span>${texto}</span>`;
+      corpoChat.appendChild(divMensagem);
+      corpoChat.scrollTop = corpoChat.scrollHeight;
+      return divMensagem;
+    }
+
+    async function enviarMensagem() {
+      const mensagemUsuario = inputChat.value.trim();
+      if (!mensagemUsuario) return;
+
+      adicionarMensagemNaTela(mensagemUsuario, 'mensagem-usuario');
+      inputChat.value = '';
+      historicoChat.push({ role: 'user', parts: [{ text: mensagemUsuario }] });
+
+      const divDigitando = adicionarMensagemNaTela('Soufa.IA está digitando...', 'mensagem-bot-digitando');
+
+      const iaSelecionada = seletorIA.value || 'openai';
+
+      try {
+        const respostaIA = await obterRespostaDaIA(iaSelecionada);
+        divDigitando.remove();
+        adicionarMensagemNaTela(respostaIA, 'mensagem-bot');
+        historicoChat.push({ role: 'model', parts: [{ text: respostaIA }] });
+      } catch (error) {
+        divDigitando.remove();
+        adicionarMensagemNaTela('Erro ao obter resposta da IA.', 'mensagem-bot');
+        console.error(error);
+        divDigitando.remove(); // Remover a mensagem de "digitando"
+
+        //ATUALIZADO: Remove a ultima mensagem do usuario do histórico em caso de erro, para permitir nova tentativa
+        historicoChat.pop();
+      } // Fim do try-catch
+    } // Fim da função enviarMensagem
+
+    async function obterRespostaDaIA(provedor) {
+        switch (provedor) {
+            case 'gemini':
+                return await obterRespostaDoGemini();
+            case 'openai':
+                return await obterRespostaDoOpenAI();
+            case 'claude':
+                return await obterRespostaDoClaude();
+            default:
+                throw new Error('Provedor de IA desconhecido.');
+        } // Fim da função obterRespostaDaIA
+    } // Fim da função obterRespostaDaIA
+
+    async function obterRespostaDoGemini() {
+        const apiKey = CHAVES_API.gemini;
+        if (!apiKey)
+            return "A chave da API do Gemini não foi configurada.";
+
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+        const payload = {
+            contents: historicoChat,
+            systeminstructions: "",
+            parts: [{
+                text: "Você é uma assistente virtual amigável, engraçada e com uma inteligência extrema da 'Escola de Tecnologia Futura'. Responda à seguinte pergunta de forma concisa e útil."
+            }]
+        };
+        const response = await fetch(apiUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(payload)
+        });
+        if (!response.ok) {
+            throw new Error('Erro ao obter resposta do Gemini');
+        }
+        const data = await response.json();
+        // Ajuste conforme a estrutura real da resposta da API Gemini
+        return data?.candidates?.[0]?.content?.parts?.[0]?.text || "Não foi possível obter resposta do Gemini.";
+    } // Fim da função obterRespostaDoGemini
+    async function obterRespostaDoOpenAI() {
+        const apiKey = CHAVES_API.openai;
+        if (!apiKey)
+            return "A chave da API do OpenAI não foi configurada.";
+
+        const apiUrl = `https://api.openai.com/v1/chat/completions`;
+        const payload = {
+        model: "openai-gpt-3.5-turbo",
+        messages: historicoChat,
+    };
+    const response = await fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${apiKey}`,
+        },
+        body: JSON.stringify(payload)
+    });
+    if (!response.ok) {
+        throw new Error('Erro ao obter resposta do OpenAI');
+    }
+    const data = await response.json();
+    return data?.choices?.[0]?.message?.content || "Não foi possível obter resposta do OpenAI.";
+}
+
+async function obterRespostaDoClaude() {
+    return "Integração com Claude ainda não implementada.";
+}
+
+btnEnviarChat.addEventListener('click', enviarMensagem);
+inputChat.addEventListener('keypress', e => {
+  if (e.key === 'Enter') enviarMensagem();
+});
+</script>
+</body>
+</html>

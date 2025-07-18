@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Quiz Tech Neon</title>
+    <style>
+        /* Importa a fonte Inter do Google Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+
+        /* Definição das variáveis de cor para o tema neon roxo */
+        :root {
+            --neon-purple: #EE00FF; /* Roxo neon principal */
+            --dark-background: #1a1a1a; /* Fundo escuro */
+            --medium-background: #2a2a2a; /* Fundo médio para containers */
+            --light-background: #4a4a4a; /* Fundo claro para inputs */
+            --text-color: #e0e0e0; /* Cor do texto geral */
+            --border-color: #9900FF; /* Roxo mais escuro para bordas */
+            --glow-color: rgba(238, 0, 255, 0.1); /* Brilho roxo suave para o corpo */
+            --light-purple: #D400FF; /* Roxo ligeiramente mais claro para hover */
+            --error-red: #FF3366; /* Vermelho neon para mensagens de erro */
+        }
+
+        /* Estilos globais para o corpo da página */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--dark-background);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Ocupa a altura total da viewport */
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow: hidden; /* Esconde qualquer overflow, como o brilho */
+        }
+
+        /* Pseudo-elemento para criar o efeito de brilho no fundo */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, var(--glow-color) 0%, transparent 70%);
+            pointer-events: none; /* Não interfere com cliques do mouse */
+            z-index: -1; /* Fica atrás de todo o conteúdo */
+            animation: glow-pulse 8s infinite alternate; /* Animação de pulsação */
+        }
+
+        /* Animação para o brilho de fundo */
+        @keyframes glow-pulse {
+            0% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.05); }
+            100% { opacity: 0.3; transform: scale(1); }
+        }
+
+        /* Container principal do formulário de login */
+        .login-container {
+            background-color: var(--medium-background);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 0 30px var(--neon-purple), 0 0 60px var(--neon-purple); /* Sombra neon */
+            width: 100%;
+            max-width: 400px; /* Largura máxima do container */
+            border: 2px solid var(--neon-purple); /* Borda neon */
+            text-align: center;
+            position: relative;
+            animation: container-glow 5s infinite alternate; /* Animação de brilho para o container */
+        }
+
+        /* Animação para o brilho do container */
+        @keyframes container-glow {
+            0% { box-shadow: 0 0 30px var(--neon-purple), 0 0 80px var(--neon-purple); }
+            100% { box-shadow: 0 0 40px var(--neon-purple), 0 0 90px var(--neon-purple); }
+        }
+
+        /* Título "Login" */
+        h1 {
+            color: var(--neon-purple);
+            margin-bottom: 40px;
+            font-size: 2.5em;
+            text-shadow: 0 0 10px var(--neon-purple), 0 0 20px var(--neon-purple); /* Sombra de texto neon */
+        }
+
+        /* Grupo de formulário (label + input) */
+        .form-group {
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        /* Labels dos campos de input */
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: var(--neon-purple);
+            font-size: 1.1em;
+            font-weight: bold;
+            text-shadow: 0 0 5px var(--neon-purple); /* Sombra de texto neon */
+        }
+
+        /* Estilo para os campos de input de texto e senha */
+        .form-group input[type="text"],
+        .form-group input[type="password"] {
+            width: calc(100% - 22px); /* Largura total menos padding e borda */
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background-color: var(--light-background);
+            color: var(--text-color);
+            font-size: 1em;
+            box-shadow: inset 0 0 8px rgba(238, 0, 255, 0.3); /* Sombra interna */
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* Estilo dos inputs quando em foco */
+        .form-group input[type="text"]:focus,
+        .form-group input[type="password"]:focus {
+            outline: none;
+            border-color: var(--neon-purple);
+            box-shadow: inset 0 0 12px var(--neon-purple); /* Sombra interna neon */
+        }
+
+        /* Estilo para o botão de "Entrar" */
+        button {
+            display: block;
+            width: 80%;
+            padding: 15px 25px;
+            background-color: var(--neon-purple);
+            color: var(--dark-background);
+            border: none;
+            border-radius: 8px;
+            font-size: 1.5em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            margin: 30px auto 0;
+            text-shadow: 0 0 5px rgba(0,0,0,0.5);
+            box-shadow: 0 0 20px var(--neon-purple); /* Sombra neon */
+        }
+
+        /* Estilo do botão ao passar o mouse */
+        button:hover {
+            background-color: var(--light-purple);
+            transform: translateY(-3px); /* Efeito de "levantar" */
+            box-shadow: 0 0 30px var(--neon-purple);
+        }
+
+        /* Estilo do botão ao clicar */
+        button:active {
+            transform: translateY(0);
+        }
+
+        /* Estilo para mensagens de feedback (sucesso/erro) */
+        .message {
+            margin-top: 20px;
+            font-size: 1.1em;
+            text-shadow: 0 0 8px; /* Sombra para o texto da mensagem */
+            display: none; /* Escondido por padrão, será exibido via JS */
+        }
+
+        /* Cor da mensagem para feedback correto (reusado do quiz) */
+        .correct-feedback {
+            color: var(--neon-purple);
+            text-shadow: 0 0 8px var(--neon-purple);
+        }
+
+        /* Cor da mensagem para feedback incorreto (reusado do quiz) */
+        .incorrect-feedback {
+            color: var(--error-red);
+            text-shadow: 0 0 8px var(--error-red);
+        }
+
+        /* Estilo para o link "Crie uma conta" */
+        .create-account-link {
+            margin-top: 20px;
+            font-size: 1em;
+            color: var(--text-color);
+        }
+
+        .create-account-link a {
+            color: var(--neon-purple);
+            text-decoration: none;
+            font-weight: bold;
+            text-shadow: 0 0 5px var(--neon-purple);
+            transition: text-shadow 0.3s ease;
+        }
+
+        .create-account-link a:hover {
+            text-shadow: 0 0 10px var(--neon-purple), 0 0 20px var(--neon-purple);
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h1>Login</h1>
+
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="username">Usuário:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="psw">Senha:</label>
+                <input type="password" id="psw" name="psw" required>
+            </div>
+            <button type="submit">Entrar</button>
+        </form>
+
+        <div class="message" id="loginMessage"></div>
+
+        <p class="create-account-link">Não tem login? <a href="#">Crie uma conta</a></p>
+    </div>
+
+    <script src="login.js"></script>
+</body>
+</html>
