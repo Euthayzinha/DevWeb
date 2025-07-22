@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deashboard</title>
+</head>
+<body>
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+</body>
+</html>
+<!-- Seu HTML anterior -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+  import { getFirestore, collection, query, where, doc, updateDoc, onSnapshot, addDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-analytics.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyAZ3Z-CQfxcmtESktUgfVw1CpG2GClZmQw",
+    authDomain: "devweb-b47f4.firebaseapp.com",
+    projectId: "devweb-b47f4",
+    storageBucket: "devweb-b47f4.firebasestorage.app",
+    messagingSenderId: "645445989422",
+    appId: "1:645445989422:web:b2a8029786ea4e0f56dbbf"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  const elementoTabela = document.getElementById('tabela-matriculas');
+  const elementoContador = document.getElementById('contador-pendentes');
+  const elementoMensagemVazia = document.getElementById('mensagem-sem-pendencias');
+  let listaDeCadastrosPendentes = [];
+
+  function formatarData(dataISO) {
+    const data = new Date(dataISO);
+    return data.toLocaleDateString('pt-BR');
+  }
+
+  function desenharTabela() {
+    elementoTabela.innerHTML = '';
+    if (listaDeCadastrosPendentes.length === 0) {
+      elementoMensagemVazia.classList.remove('hidden');
+      return;
+    } else {
+      elementoMensagemVazia.classList.add('hidden');
+    }
+
+    listaDeCadastrosPendentes.forEach(cadastro => {
+      const linha = document.createElement('tr');
+      linha.innerHTML = `
+        <td>${formatarData(cadastro.criadoEm)}</td>
+        <td class="capitalize">${cadastro.perfil}</td>
+        <td class="text-center">
+          <button data-id="${cadastro.id}" class="btn-acao btn-aprovar">Aprovar</button>
+          <button data-id="${cadastro.id}" class="btn-acao btn-rejeitar">Rejeitar</button>
+        </td>
+      `;
+      elementoTabela.appendChild(linha);
+    });
+
+    atualizarContador();
+  }
+
+  function atualizarContador() {
+    const total = listaDeCadastrosPendentes.length;
+    elementoContador.textContent = total;
+    elementoContador.classList.toggle('hidden', total === 0);
+  }
+
+  async function aprovarMatricula(id) {
+    const docRef = doc(db, "usuarios", id);
+    await updateDoc(docRef, { status: "ativo" });
+  }
+
+  async function rejeitarMatricula(id) {
+    const docRef = doc(db, "usuarios", id);
+    await updateDoc(docRef, { status: "rejeitado" });
+  }
+
+  elementoTabela.addEventListener('click', (evento) => {
+    const alvo = evento.target;
+    if (alvo.classList.contains('btn-acao')) {
+      const id = alvo.dataset.id;
+      if (alvo.classList.contains('btn-aprovar')) aprovarMatricula(id);
+      else if (alvo.classList.contains('btn-rejeitar')) rejeitarMatricula(id);
+    }
+  });
+
+  const queryMatriculas = query(collection(db, "usuarios"), where("status", "==", "pending"));
+  onSnapshot(queryMatriculas, (snapshot) => {
+    listaDeCadastrosPendentes = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    desenharTabela();
+  });
+
+  // --- LÓGICA DE GAMIFICAÇÃO ---
+  const formNovoDesafio = document.getElementById('form-novo-desafio');
+  const listaDesafiosAtivos = document.getElementById('lista-desafios-ativos');
+
+  formNovoDesafio.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const novoDesafio = {
+      titulo: document.getElementById('titulo-desafio').value,
+      descricao: document.getElementById('descricao-desafio').value,
+      pontos: parseInt(document.getElementById('pontos-desafio').value),
+      iconeMedalha: document.getElementById('icone-medalha').value,
+      criadoEm: new Date().toISOString(),
+      ativo: true
+    };
+
+    try {
+      await addDoc(collection(db, "desafios"), novoDesafio);
+      formNovoDesafio.reset();
+    } catch (error) {
+      console.error("Erro ao adicionar desafio: ", error);
+      alert("Não foi possível criar o desafio.");
+    }
+  });
+
+  const queryDesafios = query(collection(db, "desafios"), where("ativo", "==", true));
+  onSnapshot(queryDesafios, (snapshot) => {
+    listaDesafiosAtivos.innerHTML = '';
+    if (snapshot.empty) {
+      listaDesafiosAtivos.innerHTML = '<li>Nenhum desafio ativo.</li>';
+      return;
+    }
+    snapshot.forEach(doc => {
+      const desafio = doc.data();
+      const item = document.createElement('li');
+      item.innerHTML = `
+        <span class="icone-desafio">${desafio.iconeMedalha}</span>
+        <div class="info-desafio">
+          <strong>${desafio.titulo}</strong>
+          <p>${desafio.pontos} pontos</p>
+        </div>
+      `;
+      listaDesafiosAtivos.appendChild(item);
+    });
+  });
+</script>
+
+</body>
+</html>

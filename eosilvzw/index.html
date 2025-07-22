@@ -10,172 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="estiloindex.css">
     <link rel="stylesheet" href="estilo.css">
-</head>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap');
-        
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #0f0a1a;
-            color: #e2e2e2;
-            overflow-x: hidden;
-        }
-        
-        .title-font {
-            font-family: 'Orbitron', sans-serif;
-        }
-        
-        .neon-purple {
-            color: #c724f1;
-            text-shadow: 0 0 5px #c724f1, 0 0 10px #c724f1, 0 0 15px #c724f1;
-        }
-        
-        .neon-border {
-            border: 1px solid #c724f1;
-            box-shadow: 0 0 5px #c724f1, 0 0 10px rgba(199, 36, 241, 0.5);
-        }
-        
-        .neon-bg {
-            background: rgba(20, 10, 30, 0.8);
-            box-shadow: 0 0 20px rgba(199, 36, 241, 0.3);
-        }
-        
-        .animated-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background: linear-gradient(45deg, #0f0a1a, #1a0d2e, #0f0a1a);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
-        }
-        
-        .circuit-pattern {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            opacity: 0.05;
-            background-image: 
-                radial-gradient(circle at 10% 20%, #c724f1 0%, transparent 20%),
-                radial-gradient(circle at 90% 80%, #c724f1 0%, transparent 20%),
-                radial-gradient(circle at 50% 50%, #c724f1 0%, transparent 30%);
-            background-size: 300px 300px;
-            animation: float 20s linear infinite;
-        }
-        
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        
-        @keyframes float {
-            0% { transform: translate(0, 0); }
-            25% { transform: translate(-5%, -5%); }
-            50% { transform: translate(-10%, 0); }
-            75% { transform: translate(-5%, 5%); }
-            100% { transform: translate(0, 0); }
-        }
-        
-        .pulse {
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(199, 36, 241, 0.7); }
-            70% { box-shadow: 0 0 0 10px rgba(199, 36, 241, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(199, 36, 241, 0); }
-        }
-        
-        .glow-on-hover:hover {
-            text-shadow: 0 0 10px #c724f1, 0 0 20px #c724f1;
-        }
-        
-        .tech-card {
-            transition: all 0.3s ease;
-            transform-style: preserve-3d;
-        }
-        
-        .tech-card:hover {
-            transform: translateY(-5px) rotateX(5deg);
-            box-shadow: 0 15px 30px rgba(199, 36, 241, 0.4);
-        }
-        
-        .chat-bubble {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 60px;
-            height: 60px;
-            background: #c724f1;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            z-index: 1000;
-            box-shadow: 0 0 15px rgba(199, 36, 241, 0.8);
-            animation: pulse 2s infinite;
-        }
-        
-        .chat-window {
-            position: fixed;
-            bottom: 90px;
-            right: 20px;
-            width: 300px;
-            height: 400px;
-            background: rgba(20, 10, 30, 0.95);
-            border-radius: 10px;
-            border: 1px solid #c724f1;
-            box-shadow: 0 0 20px rgba(199, 36, 241, 0.5);
-            z-index: 1000;
-            display: none;
-            flex-direction: column;
-            overflow: hidden;
-        }
-        
-        .chat-header {
-            background: rgba(199, 36, 241, 0.2);
-            padding: 10px;
-            border-bottom: 1px solid #c724f1;
-        }
-        
-        .chat-messages {
-            flex: 1;
-            padding: 10px;
-            overflow-y: auto;
-        }
-        
-        .chat-input {
-            padding: 10px;
-            border-top: 1px solid #c724f1;
-            background: rgba(20, 10, 30, 0.8);
-        }
-        
-        .message {
-            margin-bottom: 10px;
-            padding: 8px 12px;
-            border-radius: 15px;
-            max-width: 80%;
-        }
-        
-        .user-message {
-            background: rgba(199, 36, 241, 0.3);
-            margin-left: auto;
-            border-bottom-right-radius: 5px;
-        }
-        
-        .bot-message {
-            background: rgba(255, 255, 255, 0.1);
-            margin-right: auto;
-            border-bottom-left-radius: 5px;
-        }
-    </style>
+    <link rel="stylesheet" href="index.css">
 </head>
 <body>
     <div class="animated-bg"></div>
@@ -235,7 +70,7 @@
                         </p>
                         <div class="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
                             <div class="rounded-md shadow">
-                                <a href="#cursos" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-purple-900 hover:bg-purple-800 md:py-4 md:text-lg md:px-10 neon-border">
+                                <a href="login.html" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-purple-900 hover:bg-purple-800 md:py-4 md:text-lg md:px-10 neon-border">
                                     Comece Agora
                                 </a>
                             </div>
@@ -459,7 +294,7 @@
                             </div>
                             <div class="ml-3">
                                 <p class="text-sm text-gray-300">Assistente Virtual</p>
-                                <p class="text-base font-medium text-white"><soufa class="IA">Soufa.IA</soufa></p>
+                                <p class="text-base font-medium text-white"><soufa class="IA">SofIA</soufa></p>
                             </div>
                         </div>
                     </div>
@@ -715,8 +550,8 @@ const btnAbrirChat = document.getElementById('btn-abrir-chat');
     let historicoChat = [];
 
 const CHAVES_API = {
-  gemini: '.',
-  openai: '.',
+  gemini: 'AIzaSyAe3iB2o3ib-rnWUa_lrNq3N1YaTLTljNU',
+  openai: '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',
   claude: '.',
 }; // Fim das chaves de API
 
@@ -747,7 +582,7 @@ const CHAVES_API = {
       inputChat.value = '';
       historicoChat.push({ role: 'user', parts: [{ text: mensagemUsuario }] });
 
-      const divDigitando = adicionarMensagemNaTela('Soufa.IA está digitando...', 'mensagem-bot-digitando');
+      const divDigitando = adicionarMensagemNaTela('SoufIA está digitando...', 'mensagem-bot-digitando');
 
       const iaSelecionada = seletorIA.value || 'openai';
 

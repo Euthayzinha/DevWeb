@@ -1,0 +1,221 @@
+/* --- Fundo Animado com Neon --- */
+body::before {
+    content: "";
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at center, #1a0033, #0d0d1a, #000);
+    background-size: 400% 400%;
+    animation: fundoAnimado 20s ease-in-out infinite;
+    z-index: -2;
+    opacity: 0.6;
+}
+
+@keyframes fundoAnimado {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* --- Partículas simuladas --- */
+body::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(#7f00ff 1px, transparent 1px),
+                      radial-gradient(#bf00ff 1px, transparent 1px);
+    background-size: 50px 50px;
+    background-position: 0 0, 25px 25px;
+    opacity: 0.1;
+    z-index: -1;
+    animation: animarParticulas 60s linear infinite;
+}
+
+@keyframes animarParticulas {
+    from { transform: translateY(0); }
+    to { transform: translateY(-100px); }
+}
+
+/* --- Reset Básico e Estilos Globais --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #0d0d1a;
+    color: #e0e0ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 1rem;
+}
+
+/* Scrollbar personalizada */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #0d0d1a;
+}
+::-webkit-scrollbar-thumb {
+    background: #7f00ff;
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #bf00ff;
+}
+
+/* --- Card de Cadastro --- */
+.container-cadastro {
+    width: 100%;
+    max-width: 32rem;
+}
+
+.card-cadastro {
+    background-color: #1a1a2e;
+    border-radius: 0.75rem;
+    padding: 2.5rem;
+    border: 2px solid #7f00ff;
+    box-shadow: 0 0 25px rgba(191, 0, 255, 0.4);
+    animation: neonPulse 3s ease-in-out infinite;
+    transition: all 0.3s ease-in-out;
+}
+
+@keyframes neonPulse {
+    0%, 100% {
+        box-shadow: 0 0 25px rgba(191, 0, 255, 0.4);
+    }
+    50% {
+        box-shadow: 0 0 35px rgba(191, 0, 255, 0.7);
+    }
+}
+
+.titulo {
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: #bf00ff;
+    margin-bottom: 0.5rem;
+    text-align: center;
+    text-shadow: 0 0 8px #bf00ff;
+}
+
+.subtitulo {
+    color: #a1a1d6;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.grupo-formulario {
+    margin-bottom: 1.25rem;
+}
+
+.grupo-formulario label {
+    display: block;
+    color: #c3bdf2;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.campo-input {
+    width: 100%;
+    padding: 0.6rem 0.8rem;
+    border: 1px solid #7f00ff;
+    border-radius: 0.5rem;
+    outline: none;
+    background-color: #121225;
+    color: #ffffff;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    transition: all 0.3s ease-in-out;
+    caret-color: #bf00ff;
+}
+
+.campo-input:focus {
+    border-color: #bf00ff;
+    box-shadow: 0 0 6px #bf00ff;
+}
+
+#area-mensagem {
+    text-align: center;
+    color: #ff4d8b;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    min-height: 1.5rem;
+}
+
+/* --- Botão --- */
+.botao {
+    width: 100%;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 1rem;
+    padding: 0.75rem 1rem;
+    border: none;
+    border-radius: 0.5rem;
+    background-color: #7f00ff;
+    box-shadow: 0 0 12px #7f00ff;
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.botao:disabled {
+    background-color: #3a3a50;
+    cursor: not-allowed;
+    color: #aaa;
+}
+
+.botao:hover:not(:disabled) {
+    background-color: #bf00ff;
+    box-shadow: 0 0 15px #bf00ff;
+}
+
+/* --- Link para login --- */
+.link-login {
+    text-align: center;
+    margin-top: 1.5rem;
+    font-size: 0.875rem;
+    color: #aaaacc;
+}
+
+.link-login a {
+    color: #bf00ff;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.link-login a:hover {
+    text-decoration: underline;
+}
+
+/* --- Card de Sucesso --- */
+.card-sucesso {
+    text-align: center;
+    padding: 2rem;
+    background-color: #1a1a2e;
+    border-radius: 0.75rem;
+    border: 2px solid #00ffae;
+    box-shadow: 0 0 20px rgba(0, 255, 174, 0.4);
+}
+
+.card-sucesso h1 {
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: #00ffae;
+    margin-bottom: 1rem;
+    text-shadow: 0 0 6px #00ffae;
+}
+
+.card-sucesso p {
+    color: #d1d1ff;
+    margin-top: 0.5rem;
+    line-height: 1.6;
+}
