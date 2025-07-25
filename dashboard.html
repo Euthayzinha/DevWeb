@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guia - DevsWebs</title>
+  <link rel="stylesheet" href="dashboard.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</head>
+<body>
+  <div class="container-principal">
+    <!-- Sidebar -->
+    <div class="barra-lateral">
+      <div class="barra-lateral-header">
+        <h1>Guia - DevsWebs</h1>
+      </div>
+      <ul class="lista-menu">
+        <li class="item-menu">
+          <a href="#"><ion-icon name="home-outline"></ion-icon> Visão Geral</a>
+        </li>
+        <li class="item-menu item-menu-ativo">
+          <a href="#"><ion-icon name="person-add-outline"></ion-icon> Matrículas <span id="contador-pendentes"></span></a>
+        </li>
+        <li class="item-menu">
+          <a href="#"><ion-icon name="game-controller-outline"></ion-icon> Gamificação</a>
+        </li>
+        <li class="item-menu">
+          <a href="#"><ion-icon name="chatbubbles-outline"></ion-icon> Chatbots</a>
+        </li>
+        <li class="item-menu">
+          <a href="#"><ion-icon name="log-out-outline"></ion-icon> Sair</a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Conteúdo -->
+    <div class="conteudo-principal">
+      <div class="header-principal">
+        <h2>Aprovação de Matrículas</h2>
+        <div class="avatar-admin">
+          <span>Admin</span>
+          <img src="https://placehold.co/100x100/8000ff/ffffff?text=A" alt="Admin" />
+        </div>
+      </div>
+
+      <div class="container-conteudo">
+        <div class="card">
+          <h3>Cadastros Pendentes</h3>
+          <div class="tabela-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>CPF</th>
+                  <th>Data</th>
+                  <th>Perfil</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody id="tabela-matriculas"></tbody>
+            </table>
+            <p id="mensagem-sem-pendencias" class="text-center">Nenhum cadastro pendente. 🎉</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Desafios de Gamificação</h3>
+          <div class="container-gamificacao">
+            <form id="form-novo-desafio" class="form-desafio">
+              <input type="text" id="titulo-desafio" placeholder="Título" required />
+              <textarea id="descricao-desafio" placeholder="Descrição" required></textarea>
+              <input type="number" id="pontos-desafio" placeholder="Pontos" required />
+              <input type="text" id="icone-medalha" placeholder="Ícone (ex: 🏆)" maxlength="2" required />
+              <button type="submit" class="btn-acao">Criar Desafio</button>
+            </form>
+            <ul id="lista-desafios-ativos" class="lista-desafios"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import {
+      getFirestore,
+      collection,
+      query,
+      where,
+      doc,
+      updateDoc,
+      onSnapshot,
+      addDoc
+    } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+    import { getAuth } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAZ3Z-CQfxcmtESktUgfVw1CpG2GClZmQw",
+      authDomain: "devweb-b47f4.firebaseapp.com",
+      projectId: "devweb-b47f4",
+      storageBucket: "devweb-b47f4.appspot.com",
+      messagingSenderId: "645445989422",
+      appId: "1:645445989422:web:b2a8029786ea4e0f56dbbf"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const auth = getAuth(app);
+
+    const elementoTabela = document.getElementById('tabela-matriculas');
+    const elementoContador = document.getElementById('contador-pendentes');
+    const elementoMensagemVazia = document.getElementById('mensagem-sem-pendencias');
+    let listaDeCadastrosPendentes = [];
+
+    function formatarData(dataISO) {
+      if (!dataISO) return 'Data inválida';
+      const data = new Date(dataISO);
+      return data.toLocaleDateString('pt-BR');
+    }
+
+    function desenharTabela() {
+      elementoTabela.innerHTML = '';
+      elementoMensagemVazia.classList.toggle('hidden', listaDeCadastrosPendentes.length > 0);
+      listaDeCadastrosPendentes.forEach(cadastro => {
+        const linha = document.createElement('tr');
+        linha.innerHTML = `
+          <td>${cadastro.nomeCompleto || 'Não informado'}</td>
+          <td>${cadastro.cpf || 'Não informado'}</td>
+          <td>${formatarData(cadastro.criadoEm)}</td>
+          <td>${cadastro.perfil || 'Não informado'}</td>
+          <td class="text-center">
+            <button data-id="${cadastro.id}" class="btn-acao btn-aprovar">Aprovar</button>
+            <button data-id="${cadastro.id}" class="btn-acao btn-rejeitar">Rejeitar</button>
+          </td>`;
+        elementoTabela.appendChild(linha);
+      });
+      atualizarContador();
+    }
+
+    function atualizarContador() {
+      const total = listaDeCadastrosPendentes.length;
+      elementoContador.textContent = total;
+      elementoContador.classList.toggle('hidden', total === 0);
+    }
+
+    async function aprovarMatricula(id) {
+      const docRef = doc(db, "usuarios", id);
+      await updateDoc(docRef, { status: "ativo" });
+    }
+
+    async function rejeitarMatricula(id) {
+      const docRef = doc(db, "usuarios", id);
+      await updateDoc(docRef, { status: "rejeitado" });
+    }
+
+    elementoTabela.addEventListener('click', (evento) => {
+      const alvo = evento.target;
+      const id = alvo.dataset.id;
+      if (alvo.classList.contains('btn-aprovar')) aprovarMatricula(id);
+      if (alvo.classList.contains('btn-rejeitar')) rejeitarMatricula(id);
+    });
+
+    const queryMatriculas = query(collection(db, "usuarios"), where("status", "==", "pending"));
+    onSnapshot(queryMatriculas, (snapshot) => {
+      listaDeCadastrosPendentes = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      desenharTabela();
+    });
+
+    // GAMIFICAÇÃO
+    const formNovoDesafio = document.getElementById('form-novo-desafio');
+    const listaDesafiosAtivos = document.getElementById('lista-desafios-ativos');
+
+    formNovoDesafio.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const novoDesafio = {
+        titulo: document.getElementById('titulo-desafio').value,
+        descricao: document.getElementById('descricao-desafio').value,
+        pontos: parseInt(document.getElementById('pontos-desafio').value),
+        iconeMedalha: document.getElementById('icone-medalha').value,
+        criadoEm: new Date().toISOString(),
+        ativo: true
+      };
+      try {
+        await addDoc(collection(db, "desafios"), novoDesafio);
+        formNovoDesafio.reset();
+      } catch (error) {
+        alert("Erro ao criar desafio.");
+      }
+    });
+
+    const queryDesafios = query(collection(db, "desafios"), where("ativo", "==", true));
+    onSnapshot(queryDesafios, (snapshot) => {
+      listaDesafiosAtivos.innerHTML = '';
+      if (snapshot.empty) {
+        listaDesafiosAtivos.innerHTML = '<li>Nenhum desafio ativo.</li>';
+        return;
+      }
+      snapshot.forEach(doc => {
+        const desafio = doc.data();
+        const item = document.createElement('li');
+        item.innerHTML = `
+          <span class="icone-desafio">${desafio.iconeMedalha}</span>
+          <div class="info-desafio">
+            <strong>${desafio.titulo}</strong>
+            <p>${desafio.pontos} pontos</p>
+          </div>`;
+        listaDesafiosAtivos.appendChild(item);
+      });
+    });
+  </script>
+</body>
+</html>

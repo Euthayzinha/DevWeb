@@ -1,0 +1,184 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #0a012a;
+  color: #e0e0ff;
+  display: flex;
+  height: 100vh;
+}
+
+.container-principal {
+  display: flex;
+  width: 100%;
+}
+
+.barra-lateral {
+  width: 240px;
+  background: linear-gradient(180deg, #1a0036, #3d0c78);
+  padding: 2rem 1rem;
+  box-shadow: 0 0 20px #8b00ff66;
+}
+
+.barra-lateral h1 {
+  color: #cc88ff;
+  font-size: 1.6rem;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.lista-menu {
+  list-style: none;
+}
+
+.item-menu {
+  margin-bottom: 1rem;
+}
+
+.item-menu a {
+  text-decoration: none;
+  color: #b184ff;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0.7rem;
+  border-radius: 10px;
+  transition: background 0.3s;
+}
+
+.item-menu a:hover,
+.item-menu-ativo a {
+  background-color: #4e0b7e;
+  color: #fff;
+}
+
+.conteudo-principal {
+  flex: 1;
+  padding: 2rem;
+  background: radial-gradient(circle at top left, #1a0036, #0a012a);
+  overflow-y: auto;
+}
+
+.header-principal {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.header-principal h2 {
+  font-size: 1.8rem;
+  color: #fff;
+}
+
+.avatar-admin {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #3d0c78;
+  padding: 0.5rem 1rem;
+  border-radius: 30px;
+  box-shadow: 0 0 10px #a450ff;
+}
+
+.avatar-admin img {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+}
+
+.card {
+  background: #1f003d;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 0 20px #a54bff88;
+}
+
+.card h3 {
+  color: #ffb3ff;
+  margin-bottom: 1rem;
+}
+
+.tabela-wrapper {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  color: #e0ccff;
+}
+
+thead {
+  background: #3d0c78;
+}
+
+th,
+td {
+  padding: 0.75rem;
+  text-align: left;
+}
+
+tbody tr:hover {
+  background: #2b0055;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.form-desafio {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+input,
+textarea {
+  background: #330066;
+  border: 1px solid #6c18a5;
+  color: #fff;
+  padding: 0.5rem;
+  border-radius: 8px;
+}
+
+.btn-acao {
+  background: #a450ff;
+  color: #fff;
+  padding: 0.6rem 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn-acao:hover {
+  background: #c678ff;
+}
+
+.lista-desafios {
+  list-style: none;
+  margin-top: 1rem;
+  color: #fff;
+}
+
+.lista-desafios li {
+  background: #2a0054;
+  padding: 0.7rem;
+  border-radius: 10px;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: 0 0 10px #9f4aff88;
+}
+
+.icone-desafio {
+  font-size: 1.5rem;
+}

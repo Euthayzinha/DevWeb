@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevWeb - Guia de Estudos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap');
+        
+        :root {
+            --neon-purple: #bc13fe;
+            --dark-purple: #1a0526;
+            --light-purple: #e2b0ff;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--dark-purple);
+            color: white;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .neon-text {
+            color: var(--neon-purple);
+            text-shadow: 0 0 5px var(--neon-purple), 0 0 10px var(--neon-purple);
+        }
+        
+        .neon-border {
+            border: 2px solid var(--neon-purple);
+            box-shadow: 0 0 10px var(--neon-purple), 0 0 20px var(--neon-purple) inset;
+        }
+        
+        .neon-btn {
+            background: transparent;
+            color: var(--neon-purple);
+            border: 2px solid var(--neon-purple);
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px var(--neon-purple);
+        }
+        
+        .neon-btn:hover {
+            background: var(--neon-purple);
+            color: white;
+            box-shadow: 0 0 20px var(--neon-purple);
+        }
+        
+        .bg-animated {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.2;
+            background: linear-gradient(45deg, #1a0526, #2a0a3a, #3a0f4a, #4a145a);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+        
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .circuit-board {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.1;
+            background-image: 
+                linear-gradient(to right, var(--neon-purple) 1px, transparent 1px),
+                linear-gradient(to bottom, var(--neon-purple) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(188, 19, 254, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(188, 19, 254, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(188, 19, 254, 0); }
+        }
+        
+        .quiz-card {
+            transition: all 0.3s ease;
+            background: rgba(26, 5, 38, 0.8);
+            backdrop-filter: blur(5px);
+        }
+        
+        .quiz-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(188, 19, 254, 0.3);
+        }
+        
+        .ai-assistant {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 100;
+        }
+        
+        .ai-bubble {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+        
+        .ai-bubble.open {
+            max-height: 300px;
+        }
+        
+        .typewriter {
+            overflow: hidden;
+            border-right: 3px solid var(--neon-purple);
+            white-space: nowrap;
+            margin: 0 auto;
+            letter-spacing: 2px;
+            animation: 
+                typing 3.5s steps(40, end),
+                blink-caret 0.75s step-end infinite;
+        }
+        
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: var(--neon-purple); }
+        }
+        
+        .progress-ring {
+            transform: rotate(-90deg);
+        }
+        
+        .progress-ring__circle {
+            stroke-dasharray: 314;
+            stroke-dashoffset: 314;
+            transition: stroke-dashoffset 0.5s;
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background Elements -->
+    <div class="bg-animated"></div>
+    <div class="circuit-board"></div>
+    
+    <!-- Floating Tech Elements -->
+    <div class="absolute top-20 left-10 w-10 h-10 rounded-full bg-purple-500 opacity-20 animate-bounce"></div>
+    <div class="absolute top-1/3 right-20 w-6 h-6 rounded-full bg-purple-400 opacity-30 animate-pulse"></div>
+    <div class="absolute bottom-1/4 left-1/4 w-8 h-8 rounded-full bg-purple-600 opacity-25 animate-ping"></div>
+    
+    <!-- Header -->
+    <header class="container mx-auto px-4 py-8 text-center">
+        <h1 class="text-5xl md:text-6xl font-bold neon-text mb-4 typewriter">DevWeb - Guia de Estudos</h1>
+        <p class="text-xl text-purple-200 max-w-3xl mx-auto">Explore nossos 20 quizzes de tecnologia e aprimore suas habilidades com a ajuda da SofIA</p>
+    </header>
+    
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Categories -->
+        <section class="mb-16">
+            <h2 class="text-3xl font-bold neon-text mb-8 text-center">Áreas de Conhecimento</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Frontend Card -->
+                <div class="quiz-card neon-border rounded-lg p-6">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-code text-2xl neon-text mr-3"></i>
+                        <h3 class="text-xl font-bold neon-text">Frontend</h3>
+                    </div>
+                    <p class="text-purple-200 mb-4">Domine HTML, CSS, JavaScript e frameworks modernos como React e Vue.js.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-purple-300">5 quizzes disponíveis</span>
+                        <button class="neon-btn text-sm">Explorar</button>
+                    </div>
+                </div>
+                
+                <!-- Backend Card -->
+                <div class="quiz-card neon-border rounded-lg p-6">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-server text-2xl neon-text mr-3"></i>
+                        <h3 class="text-xl font-bold neon-text">Backend</h3>
+                    </div>
+                    <p class="text-purple-200 mb-4">Aprenda Node.js, Python, PHP, bancos de dados e arquitetura de servidores.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-purple-300">4 quizzes disponíveis</span>
+                        <button class="neon-btn text-sm">Explorar</button>
+                    </div>
+                </div>
+                
+                <!-- Mobile Card -->
+                <div class="quiz-card neon-border rounded-lg p-6">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-mobile-alt text-2xl neon-text mr-3"></i>
+                        <h3 class="text-xl font-bold neon-text">Mobile</h3>
+                    </div>
+                    <p class="text-purple-200 mb-4">Desenvolva apps com React Native, Flutter, Swift e Kotlin.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-purple-300">3 quizzes disponíveis</span>
+                        <button class="neon-btn text-sm">Explorar</button>
+                    </div>
+                </div>
+                
+                <!-- Data Science Card -->
+                <div class="quiz-card neon-border rounded-lg p-6">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-chart-line text-2xl neon-text mr-3"></i>
+                        <h3 class="text-xl font-bold neon-text">Data Science</h3>
+                    </div>
+                    <p class="text-purple-200 mb-4">Python, Machine Learning, análise de dados e visualização.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-purple-300">3 quizzes disponíveis</span>
+                        <button class="neon-btn text-sm">Explorar</button>
+                    </div>
+                </div>
+                
+                <!-- DevOps Card -->
+                <div class="quiz-card neon-border rounded-lg p-6">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-cloud text-2xl neon-text mr-3"></i>
+                        <h3 class="text-xl font-bold neon-text">DevOps</h3>
+                    </div>
+                    <p class="text-purple-200 mb-4">Docker, Kubernetes, CI/CD e infraestrutura como código.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-purple-300">2 quizzes disponíveis</span>
+                        <button class="neon-btn text-sm">Explorar</button>
+                    </div>
+                </div>
+                
+                <!-- Cybersecurity Card -->
+                <div class="quiz-card neon-border rounded-lg p-6">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-shield-alt text-2xl neon-text mr-3"></i>
+                        <h3 class="text-xl font-bold neon-text">Cybersecurity</h3>
+                    </div>
+                    <p class="text-purple-200 mb-4">Segurança da informação, ethical hacking e proteção de dados.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-purple-300">2 quizzes disponíveis</span>
+                        <button class="neon-btn text-sm">Explorar</button>
+                    </div>
+                </div>
+                
+                <!-- Blockchain Card -->
+                <div class="quiz-card neon-border rounded-lg p-6">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-link text-2xl neon-text mr-3"></i>
+                        <h3 class="text-xl font-bold neon-text">Blockchain</h3>
+                    </div>
+                    <p class="text-purple-200 mb-4">Smart contracts, Solidity, Ethereum e criptomoedas.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-purple-300">1 quiz disponível</span>
+                        <button class="neon-btn text-sm">Explorar</button>
+                    </div>
+                </div>
+                
+                <!-- UI/UX Card -->
+                <div class="quiz-card neon-border rounded-lg p-6">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-paint-brush text-2xl neon-text mr-3"></i>
+                        <h3 class="text-xl font-bold neon-text">UI/UX</h3>
+                    </div>
+                    <p class="text-purple-200 mb-4">Design de interfaces, experiência do usuário e ferramentas como Figma.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-purple-300">1 quiz disponível</span>
+                        <button class="neon-btn text-sm">Explorar</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Quizzes em Destaque -->
+        <section class="mb-16">
+            <h2 class="text-3xl font-bold neon-text mb-8 text-center">Quizzes em Destaque</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Quiz 1 -->
+                <div class="quiz-card neon-border rounded-lg p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <span class="text-xs text-purple-300 bg-purple-900 px-2 py-1 rounded">Frontend</span>
+                            <h3 class="text-xl font-bold neon-text mt-2">JavaScript Moderno</h3>
+                        </div>
+                        <div class="flex items-center">
+                            <svg class="w-10 h-10">
+                                <circle class="text-purple-900" stroke-width="4" stroke="currentColor" fill="transparent" r="15" cx="20" cy="20"/>
+                                <circle class="progress-ring__circle neon-text" stroke-width="4" stroke-linecap="round" stroke="currentColor" fill="transparent" r="15" cx="20" cy="20" style="stroke-dashoffset: 78.5;"/>
+                                <text x="20" y="24" class="text-xs fill-current neon-text text-center" text-anchor="middle">75%</text>
+                            </svg>
+                        </div>
+                    </div>
+                    <p class="text-purple-200 mb-4 text-sm">Teste seu conhecimento em ES6+, Promises, Async/Await e mais.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs text-purple-300">15 questões</span>
+                        <button class="neon-btn text-xs">Iniciar Quiz</button>
+                    </div>
+                </div>
+                
+                <!-- Quiz 2 -->
+                <div class="quiz-card neon-border rounded-lg p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <span class="text-xs text-purple-300 bg-purple-900 px-2 py-1 rounded">Backend</span>
+                            <h3 class="text-xl font-bold neon-text mt-2">Node.js Avançado</h3>
+                        </div>
+                        <div class="flex items-center">
+                            <svg class="w-10 h-10">
+                                <circle class="text-purple-900" stroke-width="4" stroke="currentColor" fill="transparent" r="15" cx="20" cy="20"/>
+                                <circle class="progress-ring__circle neon-text" stroke-width="4" stroke-linecap="round" stroke="currentColor" fill="transparent" r="15" cx="20" cy="20" style="stroke-dashoffset: 157;"/>
+                                <text x="20" y="24" class="text-xs fill-current neon-text text-center" text-anchor="middle">50%</text>
+                            </svg>
+                        </div>
+                    </div>
+                    <p class="text-purple-200 mb-4 text-sm">Event Loop, Streams, Clusters e otimização de performance.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs text-purple-300">20 questões</span>
+                        <button class="neon-btn text-xs">Iniciar Quiz</button>
+                    </div>
+                </div>
+                
+                <!-- Quiz 3 -->
+                <div class="quiz-card neon-border rounded-lg p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <span class="text-xs text-purple-300 bg-purple-900 px-2 py-1 rounded">Data Science</span>
+                            <h3 class="text-xl font-bold neon-text mt-2">Python para Análise</h3>
+                        </div>
+                        <div class="flex items-center">
+                            <svg class="w-10 h-10">
+                                <circle class="text-purple-900" stroke-width="4" stroke="currentColor" fill="transparent" r="15" cx="20" cy="20"/>
+                                <circle class="progress-ring__circle neon-text" stroke-width="4" stroke-linecap="round" stroke="currentColor" fill="transparent" r="15" cx="20" cy="20" style="stroke-dashoffset: 235.5;"/>
+                                <text x="20" y="24" class="text-xs fill-current neon-text text-center" text-anchor="middle">25%</text>
+                            </svg>
+                        </div>
+                    </div>
+                    <p class="text-purple-200 mb-4 text-sm">Pandas, NumPy, Matplotlib e técnicas de análise de dados.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs text-purple-300">18 questões</span>
+                        <button class="neon-btn text-xs">Iniciar Quiz</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Caminhos de Aprendizado -->
+        <section>
+            <h2 class="text-3xl font-bold neon-text mb-8 text-center">Caminhos de Aprendizado</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Caminho Iniciante -->
+                <div class="quiz-card neon-border rounded-lg p-6">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-seedling text-2xl neon-text mr-3"></i>
+                        <h3 class="text-xl font-bold neon-text">Iniciante</h3>
+                    </div>
+                    <p class="text-purple-200 mb-4">Comece sua jornada na programação com conceitos fundamentais.</p>
+                    <ul class="text-purple-300 text-sm mb-4 space-y-2">
+                        <li class="flex items-center"><i class="fas fa-check-circle text-xs neon-text mr-2"></i> HTML & CSS Básico</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-xs neon-text mr-2"></i> JavaScript Essencial</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-xs neon-text mr-2"></i> Git e GitHub</li>
+                    </ul>
+                    <button class="neon-btn w-full text-sm">Começar Jornada</button>
+                </div>
+
+                <!-- Caminho Intermediário -->
+                <div class="quiz-card neon-border rounded-lg p-6">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-rocket text-2xl neon-text mr-3"></i>
+                        <h3 class="text-xl font-bold neon-text">Intermediário</h3>
+                    </div>
+                    <p class="text-purple-200 mb-4">Avançe para tópicos mais complexos e frameworks modernos.</p>
+                    <ul class="text-purple-300 text-sm mb-4 space-y-2">
+                        <li class="flex items-center"><i class="fas fa-check-circle text-xs neon-text mr-2"></i> React ou Vue.js</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-xs neon-text mr-2"></i> Node.js e Express</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-xs neon-text mr-2"></i> Bancos de Dados</li>
+                    </ul>
+                    <button class="neon-btn w-full text-sm">Continuar Jornada</button>
+                </div>
+
+                <!-- Caminho Avançado -->
+                <div class="quiz-card neon-border rounded-lg p-6">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-brain text-2xl neon-text mr-3"></i>
+                        <h3 class="text-xl font-bold neon-text">Avançado</h3>
+                    </div>
+                    <p class="text-purple-200 mb-4">Domine arquiteturas complexas e otimizações de performance.</p>
+                    <ul class="text-purple-300 text-sm mb-4 space-y-2">
+                        <li class="flex items-center"><i class="fas fa-check-circle text-xs neon-text mr-2"></i> Microserviços</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-xs neon-text mr-2"></i> Docker & Kubernetes</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-xs neon-text mr-2"></i> Testes Automatizados</li>
+                    </ul>
+                    <button class="neon-btn w-full text-sm">Desafiar-me</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Assistente SofIA -->
+    <div class="ai-assistant">
+        <div class="ai-bubble bg-purple-900 neon-border rounded-lg p-4 mb-4 w-64 shadow-lg">
+            <div class="flex items-start mb-2">
+                <div class="bg-purple-700 rounded-full w-8 h-8 flex items-center justify-center mr-2">
+                    <i class="fas fa-robot neon-text"></i>
+                </div>
+                <div>
+                    <h4 class="font-bold neon-text">SofIA</h4>
+                    <p class="text-purple-200 text-sm">Olá! Como posso te ajudar nos seus estudos hoje?</p>
+                </div>
+            </div>
+            <div class="flex space-x-2">
+                <button class="bg-purple-800 hover:bg-purple-700 text-purple-200 text-xs px-2 py-1 rounded">Quizzes</button>
+                <button class="bg-purple-800 hover:bg-purple-700 text-purple-200 text-xs px-2 py-1 rounded">Dicas</button>
+                <button class="bg-purple-800 hover:bg-purple-700 text-purple-200 text-xs px-2 py-1 rounded">Recursos</button>
+            </div>
+        </div>
+        <button id="ai-toggle" class="bg-purple-700 hover:bg-purple-600 neon-border rounded-full w-16 h-16 flex items-center justify-center shadow-lg pulse">
+            <i class="fas fa-robot text-2xl neon-text"></i>
+        </button>
+    </div>
+    
+    <!-- Footer -->
+    <footer class="container mx-auto px-4 py-8 text-center text-purple-300 text-sm">
+        <p>© 2023 DevWeb - Guia de Estudos. Todos os direitos reservados.</p>
+        <div class="flex justify-center space-x-4 mt-4">
+            <a href="#" class="hover:text-purple-100"><i class="fab fa-github"></i></a>
+            <a href="#" class="hover:text-purple-100"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="hover:text-purple-100"><i class="fab fa-discord"></i></a>
+            <a href="#" class="hover:text-purple-100"><i class="fab fa-linkedin"></i></a>
+        </div>
+    </footer>
+    
+    <script>
+        // Alternar Assistente de IA
+        const aiToggle = document.getElementById('ai-toggle');
+        const aiBubble = document.querySelector('.ai-bubble');
+        
+        aiToggle.addEventListener('click', () => {
+            aiBubble.classList.toggle('open');
+        });
+        
+        // Animar anéis de progresso
+        document.addEventListener('DOMContentLoaded', () => {
+            const circles = document.querySelectorAll('.progress-ring__circle');
+            circles.forEach(circle => {
+                const radius = circle.r.baseVal.value;
+                const circumference = 2 * Math.PI * radius;
+                const offset = circumference - (parseInt(circle.parentNode.querySelector('text').textContent) / 100) * circumference;
+                circle.style.strokeDasharray = circumference;
+                circle.style.strokeDashoffset = offset;
+            });
+        });
+        
+        // Simular efeito de digitação
+        setTimeout(() => {
+            document.querySelector('.typewriter').style.animation = 'none';
+            document.querySelector('.typewriter').style.borderRight = 'none';
+        }, 3500);
+    </script>
+</body>
+</html>

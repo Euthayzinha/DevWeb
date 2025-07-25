@@ -1,0 +1,142 @@
+/* Chatbot */
+.container-chatbot {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      z-index: 999;
+}
+
+.btn-abrir-chat {
+      background: #9f00ff;
+      border: none;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 0 12px #9f00ff, 0 0 30px #bf00ff;
+      transition: flutuar 2s ease-in-out infinite;
+}
+
+.btn-abrir-chat:hover {
+      transform: scale(1.1);
+}
+
+.btn-abrir-chat img {
+      width: 38px;
+      height: 38px;
+}
+
+.btn-fechar-chat {
+     background: transparent;  
+     border: none;             
+     color: #a98eff;            
+     font-size: 20px;           
+     cursor: pointer;          
+     padding: 4px 8px;         
+     transition: color 0.3s ease;
+     line-height: 1;
+}
+
+.btn-fechar-chat:hover {
+  color: #7a5fff;            
+  transform: scale(1.2);
+}
+
+.janela-chat {
+      background: #1a1a2e;
+      border: 2px solid #9f00ff;
+      border-radius: 15px;
+      width: 320px;
+      max-height: 500px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 0 20px #9f00ff;
+}
+
+.hidden {
+      display: none;
+}
+
+.header-chat {
+      background: #9f00ff;
+      color: white;
+      padding: 10px;
+      text-align: center;
+}
+
+.header-chat h3 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 500;
+}
+
+.seletor-ia {
+      margin-top: 5px;
+      width: 100%;
+      background: #1f0037;
+      border: 1px solid #9f00ff;
+      color: rgba(255, 252, 252, 0.945);
+      padding: 5px;
+      border-radius: 5px;
+}
+
+.corpo-chat {
+      flex: 1;
+      padding: 10px;
+      overflow-y: auto;
+      background: #0f0f1f;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+.mensagem-bot,
+.mensagem-usuario {
+      padding: 10px;
+      border-radius: 10px;
+      max-width: 90%;
+      font-size: 14px;
+}
+
+.mensagem-bot {
+      background: #4b0082;
+      align-self: flex-start;
+}
+
+.mensagem-usuario {
+      background: #8000ff;
+      align-self: flex-end;
+}
+
+.mensagem-bot-digitando {
+      color: #caaaff;
+      font-style: italic;
+      font-size: 13px;
+}
+
+.rodape-chat {
+      display: flex;
+      border-top: 1px solid #9f00ff;
+      background: #1a1a2e;
+}
+
+.rodape-chat input {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      background: #0f0f1f;
+      color: white;
+      font-family: 'Poppins', sans-serif;
+}
+
+.rodape-chat button {
+      background: #9f00ff;
+      border: none;
+      color: white;
+      padding: 10px 15px;
+      cursor: pointer;
+}

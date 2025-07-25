@@ -1,0 +1,101 @@
+windows. = abre as figurinhas,
+|── = separa as pastas e arquivos, (shift+ | e shift+ __)
+
+Documentação Geral do Projeto: Escola Futuro
+1. Visão Geral
+Este documento serve como o guia central para o projeto do site da "Escola de Tecnologia Futuro". O objetivo é criar uma plataforma web completa e interativa, que atenda tanto aos pais e novos alunos quanto à administração da escola e aos alunos já matriculados.
+
+A plataforma inclui um site institucional, um sistema de cadastro e login seguro, um painel administrativo para gerenciamento, um portal do aluno com elementos de gamificação e um chatbot com Inteligência Artificial para atendimento.
+
+2. Arquitetura e Tecnologias
+O projeto foi construído com uma abordagem moderna, utilizando tecnologias gratuitas e escaláveis.
+
+Frontend: HTML5, CSS3 (puro, em arquivos separados) e JavaScript (ES6 Modules).
+
+Banco de Dados: Firebase Firestore para armazenar todos os dados da aplicação (usuários, desafios, recados).
+
+Autenticação: Firebase Authentication para gerenciar o cadastro e login com e-mail e senha.
+
+Reconhecimento Facial: face-api.js para extrair descritores faciais e realizar a autenticação por reconhecimento de rosto.
+
+Chatbot com IA: Google Gemini API para fornecer respostas inteligentes no chatbot do site.
+
+Hospedagem: O projeto está pronto para ser hospedado em serviços como Firebase Hosting ou Netlify.
+
+3. Estrutura de Arquivos Recomendada
+Para manter o projeto organizado, a seguinte estrutura de pastas e arquivos é recomendada:
+
+/projeto-escola
+│
+|── 📄 index.html
+|── 📄 estilos.css
+│
+|── 📄 cadastro.html
+|── 📄 cadastro.css
+│
+|── 📄 login.html
+|── 📄 login.css
+│
+|── 📄 dashboard.html
+|── 📄 dashboard.css
+│
+|── 📄 portal-aluno.html
+|── 📄 portal.css
+│
+|── 🧠 face-api.min.js
+│
+|── 📁 models/
+    |── ... (arquivos do face-api.js)
+
+4. Fluxo do Usuário Completo
+Visita: Um novo visitante chega ao index.html.
+
+Cadastro: Ele clica em "Inscrições" e é levado para cadastro.html, onde cria uma conta com nome, CPF, e-mail e senha. Os dados são salvos no Firestore com status "pendente".
+
+Aprovação: O administrador acessa o dashboard.html, vê o novo cadastro na lista de pendentes e clica em "Aprovar". O status do usuário no Firestore é atualizado para "ativo".
+
+Login: O usuário agora pode ir para login.html e entrar na sua conta com o e-mail e senha que cadastrou.
+
+Portal do Aluno: Após o login bem-sucedido, ele é redirecionado para portal-aluno.html, onde vê suas informações, pontos de gamificação e o mural de recados.
+
+Cadastro Facial (Opcional): No futuro, dentro do portal, o aluno poderá acessar uma seção para registrar seu rosto. Isso salvará a "assinatura facial" no seu perfil no Firestore.
+
+Login Facial (Opcional): Uma vez que o rosto esteja cadastrado, o usuário poderá usar o botão "Entrar com Reconhecimento Facial" na página de login para um acesso rápido.
+
+5. Descrição dos Componentes
+index.html (Página Principal):
+
+Apresenta a escola com um design moderno.
+
+Contém um Chatbot funcional conectado à API do Gemini para responder dúvidas. (Requer a inserção da chave de API para funcionar).
+
+cadastro.html (Página de Cadastro):
+
+Formulário para cadastro com E-mail e Senha.
+
+Conectado ao Firebase Authentication e Firestore.
+
+login.html (Página de Login):
+
+Permite login com E-mail e Senha, verificando se a matrícula do usuário está "ativa".
+
+Inclui a interface e a lógica para o Reconhecimento Facial, que busca os usuários aprovados e com rosto cadastrado no Firestore.
+
+dashboard.html (Painel do Administrador):
+
+Exibe em tempo real os usuários com matrícula "pendente".
+
+Permite aprovar ou rejeitar cadastros, atualizando o status no banco de dados.
+
+Possui uma seção de Gamificação para criar e visualizar desafios, salvando-os no Firestore.
+
+portal-aluno.html (Portal do Aluno):
+
+Página privada acessada após o login.
+
+Carrega e exibe dinamicamente os dados do usuário logado (nome, pontos, medalhas) a partir do Firestore.
+
+Mostra um mural de recados também carregado em tempo real do banco de dados.
+
+6. Segurança
+Chaves de API: A importância de não deixar as chaves de API (como a do Gemini) diretamente no código do frontend. Iremos soluconar antes do site ir para o ar, vamos usar uma Firebase Cloud Function como um intermediário seguro para proteger as chaves.

@@ -1,0 +1,291 @@
+/* --- Reset Básico e Estilos Globais --- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #0f0f1a;
+  color: #e0e0ff;
+}
+
+/* --- Estrutura Principal --- */
+.container-principal {
+  display: flex;
+  height: 100vh;
+}
+
+/* --- Barra Lateral --- */
+.barra-lateral {
+  display: flex;
+  flex-direction: column;
+  width: 16rem;
+  background-color: #1a1a2e;
+  box-shadow: 0 0 10px #9d4edd;
+}
+.barra-lateral-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 5rem;
+  background-color: #2d1b55;
+}
+.barra-lateral-header h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #c77dff;
+}
+.lista-menu {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 0;
+  list-style: none;
+}
+.item-menu a {
+  display: flex;
+  align-items: center;
+  height: 3rem;
+  text-decoration: none;
+  color: #ccccff;
+  transition: all 0.2s ease-in;
+}
+.item-menu a:hover {
+  color: #e0aaff;
+  transform: translateX(0.5rem);
+}
+.item-menu-icone {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 3rem;
+  width: 3rem;
+  font-size: 1.125rem;
+  color: #8a63d2;
+}
+.item-menu-ativo {
+  background-color: #2d1b55;
+  border-right: 4px solid #c77dff;
+}
+.item-menu-ativo a {
+  color: #e0aaff;
+}
+.item-menu-ativo .item-menu-icone {
+  color: #f0f;
+}
+.item-menu-texto {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+#contador-pendentes {
+  margin-left: auto;
+  margin-right: 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  background-color: #ff4d6d;
+  color: #ffffff;
+  border-radius: 9999px;
+  padding: 0.125rem 0.5rem;
+}
+
+/* --- Conteúdo Principal --- */
+.conteudo-principal {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow-y: auto;
+}
+.header-principal {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 5rem;
+  background-color: #1a1a2e;
+  box-shadow: 0 0 10px #7b2cbf;
+  padding: 0 1.5rem;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.header-principal h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #e0aaff;
+}
+.avatar-admin {
+  display: flex;
+  align-items: center;
+}
+.avatar-admin span {
+  font-size: 0.875rem;
+  margin-right: 0.5rem;
+  color: #c8b6ff;
+}
+.avatar-admin img {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 9999px;
+  object-fit: cover;
+}
+.container-conteudo {
+  padding: 1.5rem;
+}
+
+/* --- Card --- */
+.card {
+  background-color: #1f1f3d;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 12px #7b2cbf;
+  margin-bottom: 1.5rem;
+}
+.card h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #d0b3ff;
+}
+
+/* --- Tabela --- */
+.tabela-wrapper {
+  overflow-x: auto;
+}
+table {
+  width: 100%;
+  font-size: 0.875rem;
+  text-align: left;
+  color: #ccc;
+  border-collapse: collapse;
+}
+thead {
+  font-size: 0.75rem;
+  color: #c8b6ff;
+  text-transform: uppercase;
+  background-color: #261c3b;
+}
+th, td {
+  padding: 0.75rem 1.5rem;
+}
+tbody tr {
+  background-color: #2b2250;
+  border-bottom: 1px solid #3c2e70;
+  transition: background-color 0.3s ease;
+}
+tbody tr:hover {
+  background-color: #3a2f63;
+}
+.nome-principal {
+  font-weight: 500;
+  color: #f0f0ff;
+}
+.capitalize { text-transform: capitalize; }
+.text-center { text-align: center; }
+
+/* --- Botões de Ação --- */
+.btn-acao {
+  font-weight: 500;
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin: 0 0.25rem;
+  padding: 0.25rem 0.5rem;
+  color: #ccc;
+}
+.btn-acao:hover {
+  text-decoration: underline;
+}
+.btn-aprovar { color: #63ffb3; }
+.btn-rejeitar { color: #ff4d6d; }
+.hidden { display: none; }
+#mensagem-sem-pendencias {
+  padding: 2rem 0;
+  color: #c8b6ff;
+}
+
+/* --- SEÇÃO DE GAMIFICAÇÃO --- */
+.container-gamificacao {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.form-desafio h4, .lista-desafios h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #f3d9fa;
+}
+#form-novo-desafio {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+#form-novo-desafio input,
+#form-novo-desafio textarea {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  background-color: #120f2c;
+  border: 1px solid #5f40b9;
+  color: #eee;
+  border-radius: 0.5rem;
+  font-family: 'Poppins', sans-serif;
+}
+#form-novo-desafio input:focus,
+#form-novo-desafio textarea:focus {
+  outline: none;
+  border-color: #c77dff;
+  box-shadow: 0 0 0 2px #a855f7;
+}
+.btn-criar {
+  background-color: #7c3aed;
+  color: white;
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  font-weight: 600;
+}
+.btn-criar:hover {
+  background-color: #5b21b6;
+  text-decoration: none;
+}
+#lista-desafios-ativos {
+  list-style: none;
+  max-height: 300px;
+  overflow-y: auto;
+  padding: 0;
+}
+#lista-desafios-ativos li {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem;
+  border-bottom: 1px solid #3f3f63;
+}
+#lista-desafios-ativos li:last-child {
+  border-bottom: none;
+}
+.icone-desafio {
+  font-size: 1.5rem;
+  margin-right: 1rem;
+  color: #b084f4;
+}
+.info-desafio p {
+  font-size: 0.8rem;
+  color: #c8b6ff;
+}
+
+/* --- Responsividade --- */
+@media (min-width: 1024px) {
+  .container-gamificacao {
+    flex-direction: row;
+  }
+  .form-desafio {
+    flex: 1;
+  }
+  .lista-desafios {
+    flex: 1;
+  }
+}
+@media (max-width: 768px) {
+  .barra-lateral {
+    display: none;
+  }
+}

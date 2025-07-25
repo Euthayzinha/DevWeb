@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crie sua Conta - Guia DevsWebs</title>
+  <link rel="stylesheet" href="cadastro.css" />
+  <a href="quiz.html">Ir para o Quiz</a>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #0d0d0d;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .container-cadastro {
+      width: 100%;
+      max-width: 420px;
+      padding: 20px;
+    }
+
+    .card-cadastro {
+      background: linear-gradient(145deg, #1a0033, #330066);
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 0 20px #9f00ff77;
+    }
+
+    .titulo {
+      font-size: 28px;
+      font-weight: 700;
+      color: #bb86fc;
+    }
+
+    .subtitulo {
+      margin-bottom: 20px;
+      color: #cccccc;
+    }
+
+    .grupo-formulario {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 600;
+    }
+
+    .campo-input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 6px;
+      border: none;
+      background-color: #1e1e2f;
+      color: #fff;
+      outline: none;
+    }
+
+    .botao {
+      width: 100%;
+      padding: 12px;
+      background: #bb00ff;
+      border: none;
+      color: #fff;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .botao:hover {
+      background: #da00ff;
+    }
+
+    .link-login {
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    .link-login a {
+      color: #bb86fc;
+      text-decoration: none;
+    }
+
+    #area-mensagem {
+      margin-top: 10px;
+      font-weight: 600;
+      color: #ff4dfc;
+    }
+
+    .card-sucesso {
+      text-align: center;
+      padding: 40px;
+      background-color: #1f1f2e;
+      border-radius: 12px;
+      box-shadow: 0 0 20px #c300ff66;
+      color: #fff;
+    }
+
+    .card-sucesso h1 {
+      color: #c800ff;
+      font-size: 26px;
+      margin-bottom: 10px;
+    }
+
+    .card-sucesso p {
+      font-size: 16px;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container-cadastro">
+    <div class="card-cadastro">
+      <h1 class="titulo">Crie sua Conta</h1>
+      <p class="subtitulo">Use seu e-mail para se cadastrar.</p>
+      <form id="formulario-cadastro">
+        <div class="grupo-formulario">
+          <label for="nomeCompleto">Nome Completo</label>
+          <input type="text" id="nomeCompleto" class="campo-input" required />
+        </div>
+        <div class="grupo-formulario">
+          <label for="cpf">CPF</label>
+          <input
+            type="text"
+            id="cpf"
+            class="campo-input"
+            required
+            placeholder="000.000.000-00"
+          />
+        </div>
+        <div class="grupo-formulario">
+          <label for="dataNascimento">Data de Nascimento</label>
+          <input type="date" id="dataNascimento" class="campo-input" required />
+        </div>
+        <div class="grupo-formulario">
+          <label for="email">E-mail</label>
+          <input type="email" id="email" class="campo-input" required />
+        </div>
+        <div class="grupo-formulario">
+          <label for="senha">Senha</label>
+          <input
+            type="password"
+            id="senha"
+            class="campo-input"
+            required
+            minlength="6"
+          />
+        </div>
+        <div id="area-mensagem"></div>
+        <button type="submit" id="btn-enviar-cadastro" class="botao">
+          Criar Conta
+        </button>
+      </form>
+      <p class="link-login">Já tem uma conta? <a href="login_facial.html">Faça login</a></p>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBbTwHR4vYWrE5tahN0yB0B8gRdeCPqc7A",
+      authDomain: "escola-tecnologia.firebaseapp.com",
+      projectId: "escola-tecnologia",
+      storageBucket: "escola-tecnologia.appspot.com", // corrigido
+      messagingSenderId: "462798445",
+      appId: "1:462798445:web:9deec786a5f3dab3538964"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    const formulario = document.getElementById('formulario-cadastro');
+    const areaMensagem = document.getElementById('area-mensagem');
+    const btnEnviar = document.getElementById('btn-enviar-cadastro');
+
+    function validarCPF(cpf) {
+      return /^\d{3}\.\d{3}\.\d{3}\-\d{2}$/.test(cpf);
+    }
+
+    formulario.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      btnEnviar.disabled = true;
+      btnEnviar.textContent = 'Aguarde...';
+      areaMensagem.textContent = '';
+      areaMensagem.style.color = '#ff4d4f';
+
+      const nomeCompleto = document.getElementById('nomeCompleto').value;
+      const cpf = document.getElementById('cpf').value;
+      const dataNascimento = document.getElementById('dataNascimento').value;
+      const email = document.getElementById('email').value;
+      const senha = document.getElementById('senha').value;
+
+      if (!validarCPF(cpf)) {
+        areaMensagem.textContent = 'CPF inválido. Use o formato 111.111.111-11';
+        btnEnviar.disabled = false;
+        btnEnviar.textContent = 'Criar Conta';
+        return;
+      }
+
+      if (!dataNascimento || new Date(dataNascimento) > new Date()) {
+        areaMensagem.textContent = 'Data de nascimento inválida.';
+        btnEnviar.disabled = false;
+        btnEnviar.textContent = 'Criar Conta';
+        return;
+      }
+
+      try {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, senha);
+        const user = userCredential.user;
+
+        areaMensagem.style.color = 'green';
+        areaMensagem.textContent = 'Usuário criado! Salvando seus dados...';
+
+        await setDoc(doc(db, "usuarios", user.uid), {
+          nomeCompleto,
+          cpf,
+          dataNascimento,
+          email,
+          status: 'pending',
+          criadoEm: new Date().toISOString(),
+          descritorFacial: null
+        });
+
+        document.body.innerHTML = `
+          <div class="card-sucesso">
+            <h1>Cadastro Enviado!</h1>
+            <p>Sua conta foi criada com sucesso.</p>
+            <p>Aguarde a aprovação da sua matrícula pela escola para poder fazer o login.</p>
+          </div>
+        `;
+      } catch (error) {
+        console.error("Erro no cadastro: ", error);
+        areaMensagem.textContent = `Erro: ${error.message}`;
+        btnEnviar.textContent = 'Criar Conta';
+      }
+
+      btnEnviar.disabled = false;
+    });
+  </script>
+</body>
+</html>
